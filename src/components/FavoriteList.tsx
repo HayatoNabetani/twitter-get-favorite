@@ -22,6 +22,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
+import TwitterCardList from "./TwitterCardList";
+
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
@@ -136,11 +138,8 @@ const SideFormWrapper = styled("div")(({ theme }) => ({
 const FavoriteList: React.FC = () => {
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
-    const [value, setValue] = React.useState<string>("Card");
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue((event.target as HTMLInputElement).value);
-    };
+    const [value, setValue] = useState<string>("card");
+    const [screenName, setScreenName] = useState<string>("");
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -148,6 +147,13 @@ const FavoriteList: React.FC = () => {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValue((event.target as HTMLInputElement).value);
+    };
+    const onChangeScreenNameHandle = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setScreenName((event.target as HTMLInputElement).value);
     };
 
     return (
@@ -201,8 +207,9 @@ const FavoriteList: React.FC = () => {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                        placeholder="hogehoge"
-                        inputProps={{ 'aria-label': 'search' }}
+                            placeholder="hogehoge"
+                            inputProps={{ 'aria-label': 'search' }}
+                            onChange={(e) => onChangeScreenNameHandle(e)}
                         />
                     </Search>
                 </ListItem>      
@@ -233,7 +240,12 @@ const FavoriteList: React.FC = () => {
         </Drawer>
         <Main open={open}>
             <DrawerHeader />
-            <p>a</p>
+            {value === "card" ? (
+                <TwitterCardList />
+            ) : (
+                <p>b</p>
+            )
+            }
         </Main>
     </Box>
     );

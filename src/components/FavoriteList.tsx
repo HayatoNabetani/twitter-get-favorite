@@ -169,7 +169,8 @@ const FavoriteList: React.VFC = () => {
             .then((res: any) => {
                 const newTweetDataList = JSON.parse(res.body);
                 setError("");
-                setTweetDataList([...tweetDataList, ...newTweetDataList]);
+                // setTweetDataList([...tweetDataList, ...newTweetDataList]);
+                setTweetDataList([...newTweetDataList]);
                 setScreenName("");
             }).catch((e:any) => {
                 setError(e);
@@ -189,6 +190,13 @@ const FavoriteList: React.VFC = () => {
             });
         });
     }
+
+    ////////////////////////////////////////////////////////////////
+    // useEffect
+    ////////////////////////////////////////////////////////////////
+    useEffect(() => {
+        setTweetDataList([...tweetDataList]);
+    },[value])
 
     return (
     <Box sx={{ display: "flex" }}>

@@ -37,7 +37,7 @@ type Props = {
     tweetDataList: TweetData[];
 };
 
-const TwitterCardList:React.VFC<Props>  = ({ tweetDataList }) => {
+const TwitterCardList:React.VFC<Props>  = React.memo(({ tweetDataList }) => {
     const [expanded, setExpanded] = React.useState(false);
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -67,6 +67,6 @@ const TwitterCardList:React.VFC<Props>  = ({ tweetDataList }) => {
         </div>
 
     )
-};
+});
 
 export default TwitterCardList;

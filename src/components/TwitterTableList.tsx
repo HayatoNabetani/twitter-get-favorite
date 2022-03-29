@@ -6,12 +6,12 @@ type Props = {
     tweetDataList: TweetData[];
 };
 
-const TwitterTableList: React.VFC<Props> = ({ tweetDataList }) => {
+const TwitterTableList: React.VFC<Props> = React.memo(({ tweetDataList }) => {
     return (
         <>
             <DataTable tweetDataList={ tweetDataList } />
         </>
     );
-    };
+});
 
 export default TwitterTableList;

@@ -14,6 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { TweetData } from "../Types";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -28,37 +29,49 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     transition: theme.transitions.create("transform", {
         duration: theme.transitions.duration.shortest,
     }),
-}));
+    }));
 
-const TwitterCardList: React.FC = () => {
+type Props = {
+    tweetDataList: TweetData[];
+};
+
+const TwitterCardList:React.VFC<Props>  = ({ tweetDataList }) => {
     const [expanded, setExpanded] = React.useState(false);
-
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-    return(
-        <div className="aa" style={{ display: 'flex', justifyContent: "space-between", flexWrap: "wrap" }}>
-                <Card sx={{ width : "345px", margin : "8px" }}>
+    return (
+        <div
+            className="aa"
+            style={
+                {
+                    display: 'flex',
+                    justifyContent: "space-between",
+                    flexWrap: "wrap"
+                }
+            }
+        >
+            {tweetDataList.map((tweetData:any,index:number) => 
+                <Card sx={{ width : "345px", margin : "8px" }} key={tweetData.id}>
                     <CardHeader
                         avatar={
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src="https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg" />
+                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={ tweetData.avatar_url }/>
                         }
-                        title="なべ@Web制作"
-                        subheader="@nanabebe1111"
+                        title={ tweetData.name }
+                        subheader={ tweetData.screen_id }
                     />
                     <CardMedia
                         component="img"
                         height="194"
-                        image="https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900"
+                        image={ tweetData.media }
                         alt="Paella dish"
                     />
                     <CardContent>
                         <Typography variant="body2" color="text.secondary">
-                        知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ
+                            { tweetData.content }
                         </Typography>
                     </CardContent>
                         <CardActions disableSpacing>
-                            test
                             <ExpandMore
                             expand={expanded}
                             onClick={handleExpandClick}
@@ -71,174 +84,27 @@ const TwitterCardList: React.FC = () => {
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph variant="caption">
-                        作成日:2022年1月24日
+                        作成日:{ tweetData.create_at }
                         </Typography>
                         <Typography paragraph variant="caption">
-                        フォロワー数:936
+                        フォロワー数:{ tweetData.follower_count }
                         </Typography>
                         <Typography paragraph variant="caption">
-                        フォロー数:901
+                        フォロー数:{ tweetData.follow_count }
                         </Typography>
                         <Typography paragraph variant="caption">
-                        いいね:936
+                        いいね:{ tweetData.like_count }
                         </Typography>
                         <Typography paragraph variant="caption">
-                        リツイート:901
+                        リツイート:{ tweetData.retweet_count }
                         </Typography>
                     </CardContent>
                     </Collapse>
                 </Card>
-                <Card sx={{ width : "345px", margin : "8px" }}>
-                    <CardHeader
-                        avatar={
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src="https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg" />
-                        }
-                        title="なべ@Web制作"
-                        subheader="@nanabebe1111"
-                    />
-                    <CardMedia
-                        component="img"
-                        height="194"
-                        image="https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900"
-                        alt="Paella dish"
-                    />
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                        知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ
-                        </Typography>
-                    </CardContent>
-                        <CardActions disableSpacing>
-                            test
-                            <ExpandMore
-                            expand={expanded}
-                            onClick={handleExpandClick}
-                            aria-expanded={expanded}
-                            aria-label="show more"
-                            >
-                            <ExpandMoreIcon />
-                        </ExpandMore>
-                    </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph variant="caption">
-                        作成日:2022年1月24日
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        フォロワー数:936
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        フォロー数:901
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        いいね:936
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        リツイート:901
-                        </Typography>
-                    </CardContent>
-                    </Collapse>
-                </Card>
-                <Card sx={{ width : "345px", margin : "8px" }}>
-                    <CardHeader
-                        avatar={
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src="https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg" />
-                        }
-                        title="なべ@Web制作"
-                        subheader="@nanabebe1111"
-                    />
-                    <CardMedia
-                        component="img"
-                        height="194"
-                        image="https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900"
-                        alt="Paella dish"
-                    />
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                        知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ
-                        </Typography>
-                    </CardContent>
-                        <CardActions disableSpacing>
-                            test
-                            <ExpandMore
-                            expand={expanded}
-                            onClick={handleExpandClick}
-                            aria-expanded={expanded}
-                            aria-label="show more"
-                            >
-                            <ExpandMoreIcon />
-                        </ExpandMore>
-                    </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph variant="caption">
-                        作成日:2022年1月24日
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        フォロワー数:936
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        フォロー数:901
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        いいね:936
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        リツイート:901
-                        </Typography>
-                    </CardContent>
-                    </Collapse>
-                </Card>
-                <Card sx={{ width : "345px", margin : "8px" }}>
-                    <CardHeader
-                        avatar={
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src="https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg" />
-                        }
-                        title="なべ@Web制作"
-                        subheader="@nanabebe1111"
-                    />
-                    <CardMedia
-                        component="img"
-                        height="194"
-                        image="https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900"
-                        alt="Paella dish"
-                    />
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                        知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ知らなんだ
-                        </Typography>
-                    </CardContent>
-                        <CardActions disableSpacing>
-                            test
-                            <ExpandMore
-                            expand={expanded}
-                            onClick={handleExpandClick}
-                            aria-expanded={expanded}
-                            aria-label="show more"
-                            >
-                            <ExpandMoreIcon />
-                        </ExpandMore>
-                    </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph variant="caption">
-                        作成日:2022年1月24日
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        フォロワー数:936
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        フォロー数:901
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        いいね:936
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        リツイート:901
-                        </Typography>
-                    </CardContent>
-                    </Collapse>
-                </Card>
+            )
+            }
         </div>
+
     )
 };
 

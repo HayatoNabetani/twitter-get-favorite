@@ -23,6 +23,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
 import TwitterCardList from "./TwitterCardList";
+import TwitterTableList from "./TwitterTableList";
+import { TweetData } from "../Types";
 
 const drawerWidth = 240;
 
@@ -135,11 +137,59 @@ const SideFormWrapper = styled("div")(({ theme }) => ({
     justifyContent: "center",
 }));
 
-const FavoriteList: React.FC = () => {
+////////////////////////////////////////////////////////////////
+// useEffect
+////////////////////////////////////////////////////////////////
+// useEffect(() => {
+
+// },[])
+
+const FavoriteList: React.VFC = () => {
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
     const [value, setValue] = useState<string>("card");
     const [screenName, setScreenName] = useState<string>("");
+    const [tweetDataList, setTweetDataList] = useState<TweetData[]>([
+        {
+            id:0,
+            avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
+            name: "なべ@Web制作",
+            screen_id: "@nanabebe1111",
+            media: "https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900",
+            content: "知らなんだ",
+            created_at: "2022年1月24日",
+            follower_count: 936,
+            follow_count: 901,
+            like_count: 936,
+            retweet_count:901
+        },
+        {
+            id:1,
+            avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
+            name: "test1234@Web制作",
+            screen_id: "@nanabebe1111",
+            media: "https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900",
+            content: "あああああああ",
+            created_at: "2019年1月24日",
+            follower_count: 936,
+            follow_count: 901,
+            like_count: 936,
+            retweet_count:901
+        },
+        {
+            id:2,
+            avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
+            name: "なべ@Web制作",
+            screen_id: "@nanabebe1111",
+            media: "https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900",
+            content: "知らなんだ",
+            created_at: "2021年1月24日",
+            follower_count: 936,
+            follow_count: 901,
+            like_count: 936,
+            retweet_count:901
+        },
+    ]);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -241,9 +291,9 @@ const FavoriteList: React.FC = () => {
         <Main open={open}>
             <DrawerHeader />
             {value === "card" ? (
-                <TwitterCardList />
+                <TwitterCardList tweetDataList= { tweetDataList } />
             ) : (
-                <p>b</p>
+                <TwitterTableList tweetDataList= { tweetDataList }/>
             )
             }
         </Main>

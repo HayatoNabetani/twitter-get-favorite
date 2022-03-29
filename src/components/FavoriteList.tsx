@@ -26,6 +26,8 @@ import TwitterCardList from "./TwitterCardList";
 import TwitterTableList from "./TwitterTableList";
 import { TweetData } from "../Types";
 
+import axios from "axios";
+
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
@@ -149,53 +151,7 @@ const FavoriteList: React.VFC = () => {
     const [open, setOpen] = useState<boolean>(true);
     const [value, setValue] = useState<string>("card");
     const [screenName, setScreenName] = useState<string>("");
-    const [tweetDataList, setTweetDataList] = useState<TweetData[]>([
-        {
-            id: 0,
-            tweet_id: "11111",
-            type: "photo",
-            avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
-            name: "なべ@Web制作",
-            screen_id: "@nanabebe1111",
-            media: "https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900",
-            content: "知らなんだ",
-            created_at: "2022年1月24日",
-            follower_count: 936,
-            follow_count: 901,
-            like_count: 936,
-            retweet_count:901
-        },
-        {
-            id: 1,
-            tweet_id: "11111",
-            type: "photo",
-            avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
-            name: "test1234@Web制作",
-            screen_id: "@nanabebe1111",
-            media: "https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900",
-            content: "あああああああ",
-            created_at: "2019年1月24日",
-            follower_count: 936,
-            follow_count: 901,
-            like_count: 936,
-            retweet_count:901
-        },
-        {
-            id: 2,
-            tweet_id: "11111",
-            type: "photo",
-            avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
-            name: "なべ@Web制作",
-            screen_id: "@nanabebe1111",
-            media: "https://pbs.twimg.com/media/FBfhSCRUUAIxD-o?format=png&name=900x900",
-            content: "知らなんだ",
-            created_at: "2021年1月24日",
-            follower_count: 936,
-            follow_count: 901,
-            like_count: 936,
-            retweet_count:901
-        },
-    ]);
+    const [tweetDataList, setTweetDataList] = useState<TweetData[]>([]);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -211,6 +167,34 @@ const FavoriteList: React.VFC = () => {
     const onChangeScreenNameHandle = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setScreenName((event.target as HTMLInputElement).value);
     };
+
+    ////////////////////////////////////////////////////////////////
+    // Twitter Api
+    ////////////////////////////////////////////////////////////////
+    const getFavoriteTweetHandler = () => {
+        twitterAPI(screenName, "0")
+            .then((res: any) => {
+            const newTweetDataList = JSON.parse(res.body);
+                setTweetDataList([...tweetDataList, ...newTweetDataList]);
+            }).catch((e:any) => {
+                console.log(e);
+            });
+    }
+
+    const twitterAPI = (screen_name: string, max_id: string) => {
+        // let endpoint = `https://us-central1-twitter-get-favorite.cloudfunctions.net/handler?screen_name=${screen_name}&max_id=${max_id}`;
+        let endpoint = `http://localhost:5001/twitter-get-favorite/us-central1/handler?screen_name=${screen_name}&max_id=${max_id}`;
+        return new Promise((resolve, reject) => {
+            axios
+                .get(endpoint)
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+            });
+        });
+    }
 
     return (
     <Box sx={{ display: "flex" }}>
@@ -275,7 +259,9 @@ const FavoriteList: React.VFC = () => {
                 <Button
                     variant="contained"
                     size="medium"
-                    style={{ display: "block", textAlign: "center" }}>
+                    style={{ display: "block", textAlign: "center" }}
+                    onClick={() => getFavoriteTweetHandler()}
+                >
                     検索
                 </Button>
             </SearchStartButtonWrapper>

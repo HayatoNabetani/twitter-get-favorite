@@ -15,6 +15,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { TweetData } from "../Types";
+import Grid from "@mui/material/Grid";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -42,15 +43,16 @@ const TwitterCardList:React.VFC<Props>  = ({ tweetDataList }) => {
     };
     return (
         <div
-            className="aa"
+            className="CardList"
             style={
                 {
                     display: 'flex',
-                    justifyContent: "space-between",
+                    justifyContent: "space-around",
                     flexWrap: "wrap"
                 }
             }
         >
+            <Grid container spacing={3}>
             {tweetDataList.map((tweetData:any,index:number) => 
                 <Card sx={{ width : "345px", margin : "8px" }} key={tweetData.id}>
                     <CardHeader
@@ -61,10 +63,10 @@ const TwitterCardList:React.VFC<Props>  = ({ tweetDataList }) => {
                         subheader={ tweetData.screen_id }
                     />
                     <CardMedia
-                        component="img"
+                        component={ tweetData.type == "photo" ? "img" : "iframe"}
                         height="194"
-                        image={ tweetData.media }
-                        alt="Paella dish"
+                        image={ tweetData.media !== "" && tweetData.media.includes("mp4") ? tweetData.media : "https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage_ピクト-760x460.png"}
+                        alt="img"
                     />
                     <CardContent>
                         <Typography variant="body2" color="text.secondary">
@@ -84,7 +86,7 @@ const TwitterCardList:React.VFC<Props>  = ({ tweetDataList }) => {
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph variant="caption">
-                        作成日:{ tweetData.create_at }
+                        作成日:{ tweetData.created_at }
                         </Typography>
                         <Typography paragraph variant="caption">
                         フォロワー数:{ tweetData.follower_count }
@@ -103,6 +105,7 @@ const TwitterCardList:React.VFC<Props>  = ({ tweetDataList }) => {
                 </Card>
             )
             }
+            </Grid>    
         </div>
 
     )

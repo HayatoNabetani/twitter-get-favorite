@@ -78,14 +78,14 @@ const columns: GridColDef[] = [
 
 const DataTable:any = (props: any) => {
     return (
-        <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-            rows={props.tweetDataList}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            checkboxSelection
-        />
+        <div style={{ height: "100vh", width: "100%" }}>
+            <DataGrid
+                rows={props.tweetDataList}
+                columns={columns}
+                pageSize={50}
+                rowsPerPageOptions={[50]}
+                checkboxSelection
+            />
         </div>
     );
 }

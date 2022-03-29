@@ -16,6 +16,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { TweetData } from "../Types";
 import Grid from "@mui/material/Grid";
+import TwitterCard from "./TwitterCard";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -53,56 +54,13 @@ const TwitterCardList:React.VFC<Props>  = ({ tweetDataList }) => {
             }
         >
             <Grid container spacing={3}>
-            {tweetDataList.map((tweetData:any,index:number) => 
-                <Card sx={{ width : "345px", margin : "8px" }} key={tweetData.id}>
-                    <CardHeader
-                        avatar={
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={ tweetData.avatar_url }/>
-                        }
-                        title={ tweetData.name }
-                        subheader={ tweetData.screen_id }
-                    />
-                    <CardMedia
-                        component={ tweetData.type == "photo" ? "img" : "iframe"}
-                        height="194"
-                        image={ tweetData.media !== "" && tweetData.media.includes("mp4") ? tweetData.media : "https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage_ピクト-760x460.png"}
-                        alt="img"
-                    />
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            { tweetData.content }
-                        </Typography>
-                    </CardContent>
-                        <CardActions disableSpacing>
-                            <ExpandMore
-                            expand={expanded}
-                            onClick={handleExpandClick}
-                            aria-expanded={expanded}
-                            aria-label="show more"
-                            >
-                            <ExpandMoreIcon />
-                        </ExpandMore>
-                    </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph variant="caption">
-                        作成日:{ tweetData.created_at }
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        フォロワー数:{ tweetData.follower_count }
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        フォロー数:{ tweetData.follow_count }
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        いいね:{ tweetData.like_count }
-                        </Typography>
-                        <Typography paragraph variant="caption">
-                        リツイート:{ tweetData.retweet_count }
-                        </Typography>
-                    </CardContent>
-                    </Collapse>
-                </Card>
+            {tweetDataList.map((tweetData: any, index: number) => 
+                <Grid item key={tweetData.id} xs={12} md={6} lg={4}>
+                    <TwitterCard
+                        tweetData={tweetData}
+                        expanded={expanded}
+                        handleExpandClick={handleExpandClick} />
+                </Grid>
             )
             }
             </Grid>    

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled, useTheme, alpha } from "@mui/material/styles";
 import InputBase from '@mui/material/InputBase';
 import Box from "@mui/material/Box";
@@ -139,20 +139,12 @@ const SideFormWrapper = styled("div")(({ theme }) => ({
     justifyContent: "center",
 }));
 
-////////////////////////////////////////////////////////////////
-// useEffect
-////////////////////////////////////////////////////////////////
-// useEffect(() => {
-
-// },[])
-
 const FavoriteList: React.VFC = () => {
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>(true);
     const [value, setValue] = useState<string>("card");
     const [screenName, setScreenName] = useState<string>("");
     const [tweetDataList, setTweetDataList] = useState<TweetData[]>([]);
-
     const handleDrawerOpen = () => {
         setOpen(true);
     };

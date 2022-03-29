@@ -1,5 +1,7 @@
 export type TweetData = {
-        id:number
+        id: number;
+        tweet_id: string;
+        type: string;
         avatar_url: string;
         name: string;
         screen_id: string;

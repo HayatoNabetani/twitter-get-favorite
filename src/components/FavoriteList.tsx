@@ -151,7 +151,9 @@ const FavoriteList: React.VFC = () => {
     const [screenName, setScreenName] = useState<string>("");
     const [tweetDataList, setTweetDataList] = useState<TweetData[]>([
         {
-            id:0,
+            id: 0,
+            tweet_id: "11111",
+            type: "photo",
             avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
             name: "なべ@Web制作",
             screen_id: "@nanabebe1111",
@@ -164,7 +166,9 @@ const FavoriteList: React.VFC = () => {
             retweet_count:901
         },
         {
-            id:1,
+            id: 1,
+            tweet_id: "11111",
+            type: "photo",
             avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
             name: "test1234@Web制作",
             screen_id: "@nanabebe1111",
@@ -177,7 +181,9 @@ const FavoriteList: React.VFC = () => {
             retweet_count:901
         },
         {
-            id:2,
+            id: 2,
+            tweet_id: "11111",
+            type: "photo",
             avatar_url: "https://pbs.twimg.com/profile_images/1288756292840873985/SIEcQjsO_400x400.jpg",
             name: "なべ@Web制作",
             screen_id: "@nanabebe1111",

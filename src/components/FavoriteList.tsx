@@ -165,16 +165,20 @@ const FavoriteList: React.VFC = () => {
     // Twitter Api
     ////////////////////////////////////////////////////////////////
     const getFavoriteTweetHandler = () => {
-        twitterAPI(screenName, "0")
-            .then((res: any) => {
-                const newTweetDataList = JSON.parse(res.body);
-                setError("");
-                // setTweetDataList([...tweetDataList, ...newTweetDataList]);
-                setTweetDataList([...newTweetDataList]);
-                setScreenName("");
-            }).catch((e:any) => {
-                setError(e);
-            });
+        if (screenName !== "") {
+            twitterAPI(screenName, "0")
+                .then((res: any) => {
+                    const newTweetDataList = JSON.parse(res.body);
+                    setError("");
+                    // setTweetDataList([...tweetDataList, ...newTweetDataList]);
+                    setTweetDataList([...newTweetDataList]);
+                    setScreenName("");
+                }).catch((e:any) => {
+                    setError("ユーザ名が存在しない可能性があります。正しく入力してください。");
+                });
+        } else {
+            setError("空欄になっているので、取得できません。");
+        }
     }
 
     const twitterAPI = (screen_name: string, max_id: string) => {

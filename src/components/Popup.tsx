@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { TweetData } from "../Types";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
+import Link from "@mui/material/Link";
 
 type Props = {
     tweetData: TweetData;
@@ -71,6 +72,19 @@ const Popup:React.VFC<Props> = ({tweetData}) => {
             style={{ margin: "0", padding: "8px" }}
             >
                 リツイート：{tweetData.retweet_count}
+            </Typography>
+            <Typography
+            paragraph
+            variant="body2"
+            style={{ margin: "0", padding: "8px" }}
+            >
+                <Link
+                variant="body2"
+                href={"https://twitter.com/" + tweetData.screen_id + "/status/" + tweetData.tweet_id}
+                target="_blank"
+                    >
+                該当ツイートへ行く
+                </Link>
             </Typography>
 
         </Popover>

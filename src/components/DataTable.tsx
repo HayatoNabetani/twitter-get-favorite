@@ -45,6 +45,16 @@ const columns: GridColDef[] = [
         width: 200,
     },
     {
+        field: "tweet_id",
+        headerName: "該当ツイートURL",
+        description: "This column has a value getter and is not sortable.",
+        renderCell: (params: GridRenderCellParams<string>) => (
+            <a href={"https://twitter.com/" + params.row.screen_id + "/status/" + params.value} target="_blank">リンク</a>
+        ),
+        sortable: false,
+        width: 100,
+    },
+    {
         field: "created_at",
         headerName: "投稿日",
         type: "date",

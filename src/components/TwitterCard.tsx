@@ -56,7 +56,7 @@ const TwitterCard: React.VFC<Props> = ({ tweetData, expanded, handleExpandClick 
                 <Popup tweetData={ tweetData }/>
             }
             title={tweetData.name}
-            subheader={tweetData.screen_id}
+            subheader={"@" + tweetData.screen_id}
             style={{height: "100px"}}
         />
         <CardMedia

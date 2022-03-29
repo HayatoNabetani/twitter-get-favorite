@@ -145,6 +145,7 @@ const FavoriteList: React.VFC = () => {
     const [value, setValue] = useState<string>("card");
     const [screenName, setScreenName] = useState<string>("");
     const [tweetDataList, setTweetDataList] = useState<TweetData[]>([]);
+    const [error, setError] = useState<string>("");
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -166,16 +167,17 @@ const FavoriteList: React.VFC = () => {
     const getFavoriteTweetHandler = () => {
         twitterAPI(screenName, "0")
             .then((res: any) => {
-            const newTweetDataList = JSON.parse(res.body);
+                const newTweetDataList = JSON.parse(res.body);
+                setError("");
                 setTweetDataList([...tweetDataList, ...newTweetDataList]);
+                setScreenName("");
             }).catch((e:any) => {
-                console.log(e);
+                setError(e);
             });
     }
 
     const twitterAPI = (screen_name: string, max_id: string) => {
-        // let endpoint = `https://us-central1-twitter-get-favorite.cloudfunctions.net/handler?screen_name=${screen_name}&max_id=${max_id}`;
-        let endpoint = `http://localhost:5001/twitter-get-favorite/us-central1/handler?screen_name=${screen_name}&max_id=${max_id}`;
+        let endpoint = `${process.env.REACT_APP_API_ENDPOINT_URL}/handler?screen_name=${screen_name}&max_id=${max_id}`;
         return new Promise((resolve, reject) => {
             axios
                 .get(endpoint)
@@ -274,12 +276,15 @@ const FavoriteList: React.VFC = () => {
         </Drawer>
         <Main open={open}>
             <DrawerHeader />
-            {value === "card" ? (
-                <TwitterCardList tweetDataList= { tweetDataList } />
-            ) : (
-                <TwitterTableList tweetDataList= { tweetDataList }/>
-            )
-            }
+                {error === "" ?  value === "card" ? (
+                    <TwitterCardList tweetDataList={tweetDataList} />
+                ) : (
+                    <TwitterTableList tweetDataList={tweetDataList} />
+                )
+                :(
+                    <p>{error}</p>
+                )
+                }
         </Main>
     </Box>
     );
